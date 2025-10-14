@@ -1,0 +1,13 @@
+{
+  "itemGroup.disasterslaurendeau": "Example Mod Tab",
+  "block.disasterslaurendeau.example_block": "Example Block",
+  "item.disasterslaurendeau.example_item": "Example Item",
+
+  "disasterslaurendeau.configuration.title": "DisastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml": "DisastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml.title": "DisastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.items": "Item List",
+  "disasterslaurendeau.configuration.logDirtBlock": "Log Dirt Block",
+  "disasterslaurendeau.configuration.magicNumberIntroduction": "Magic Number Text",
+  "disasterslaurendeau.configuration.magicNumber": "Magic Number"
+}

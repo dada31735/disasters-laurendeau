@@ -3,9 +3,9 @@
   "block.disasterslaurendeau.example_block": "Example Block",
   "item.disasterslaurendeau.example_item": "Example Item",
 
-  "disasterslaurendeau.configuration.title": "DisastersLaurendeau Configs",
-  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml": "DisastersLaurendeau Configs",
-  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml.title": "DisastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.title": "disastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml": "disastersLaurendeau Configs",
+  "disasterslaurendeau.configuration.section.disasterslaurendeau.common.toml.title": "disastersLaurendeau Configs",
   "disasterslaurendeau.configuration.items": "Item List",
   "disasterslaurendeau.configuration.logDirtBlock": "Log Dirt Block",
   "disasterslaurendeau.configuration.magicNumberIntroduction": "Magic Number Text",

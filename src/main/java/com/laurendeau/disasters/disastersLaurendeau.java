@@ -1,5 +1,6 @@
 package com.laurendeau.disasters;
 
+import com.laurendeau.disasters.commands.SpawnEntityCommand;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -30,6 +31,10 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.common.NeoForge;
+
+
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(disastersLaurendeau.MODID)
@@ -68,6 +73,8 @@ public class disastersLaurendeau {
     public disastersLaurendeau(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
@@ -113,5 +120,9 @@ public class disastersLaurendeau {
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
+    }
+
+    private void onRegisterCommands(RegisterCommandsEvent event) {
+        SpawnEntityCommand.register(event.getDispatcher());
     }
 }

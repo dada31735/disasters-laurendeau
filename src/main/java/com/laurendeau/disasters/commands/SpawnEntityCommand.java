@@ -1,5 +1,6 @@
 package com.laurendeau.disasters.commands;
 
+import com.laurendeau.disasters.particles.TornadoParticleManager;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
@@ -8,12 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.phys.Vec3;
 
 
 public class SpawnEntityCommand {
@@ -22,7 +18,9 @@ public class SpawnEntityCommand {
                 .executes(context -> {
                     CommandSourceStack source = context.getSource();
                     ServerLevel level = source.getLevel();
-                    Vec3 pos = source.getPosition().add(0, 1, 0); // Vec3
+                    Vec3 pos = source.getPosition().add(0, 1, -10); // Vec3
+
+                    TornadoParticleManager.spawnBasicParticles(level, pos);
                     
                     BlockPos blockPos = new BlockPos(
                             (int) Math.floor(pos.x),

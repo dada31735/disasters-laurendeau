@@ -23,14 +23,14 @@ public class SpawnEntityCommand {
                     CommandSourceStack source = context.getSource();
                     ServerLevel level = source.getLevel();
                     Vec3 pos = source.getPosition().add(0, 1, 0); // Vec3
-                    
+
                     BlockPos blockPos = new BlockPos(
                             (int) Math.floor(pos.x),
                             (int) Math.floor(pos.y),
                             (int) Math.floor(pos.z)
                     );
 
-                    EntityType.CREEPER.spawn(level, blockPos, MobSpawnType.COMMAND);
+                    EntityType.VILLAGER.spawn(level, blockPos, MobSpawnType.COMMAND);
 
 
                     source.sendSuccess(() -> net.minecraft.network.chat.Component.literal("Spawned a creeper!"), true);

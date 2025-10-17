@@ -1,6 +1,13 @@
 package com.laurendeau.disasters;
 
+import com.laurendeau.disasters.client.ModClientSetup;
+import com.laurendeau.disasters.client.renderer.TornadoRenderer;
 import com.laurendeau.disasters.commands.SpawnEntityCommand;
+import com.laurendeau.disasters.entity.ModEntities;
+import com.laurendeau.disasters.entity.custom.TornadoEntity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -17,7 +24,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -32,8 +38,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.common.NeoForge;
-
 
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -73,9 +77,12 @@ public class disastersLaurendeau {
     public disastersLaurendeau(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::onEntityAttributeCreation);
 
-        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
 
+
+        modEventBus.addListener(this::clientSetup);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
@@ -84,9 +91,10 @@ public class disastersLaurendeau {
         CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (disastersLaurendeau) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+
+        // Register commands
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -94,6 +102,7 @@ public class disastersLaurendeau {
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
+
 
     private void commonSetup(FMLCommonSetupEvent event) {
         // Some common setup code
@@ -125,4 +134,13 @@ public class disastersLaurendeau {
     private void onRegisterCommands(RegisterCommandsEvent event) {
         SpawnEntityCommand.register(event.getDispatcher());
     }
+
+    public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.TORNADO.get(), TornadoEntity.createMobAttributes().build());
+    }
+
+    private void clientSetup(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.TORNADO.get(), TornadoRenderer::new);
+    }
+
 }
